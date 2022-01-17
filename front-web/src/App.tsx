@@ -4,12 +4,13 @@ import { Filter } from './components/filter';
 import { Navbar } from './components/navbar';
 import { SalesPanel } from './components/sales-panel';
 import { buildParams } from './helpers';
-import { SaleByGender, Store } from './types/types';
+import { SaleByGender, SalesSummary, Store } from './types/types';
 import { requestBackend } from './utils/requests';
 
 function App() {
   const [salesByGender, setSalesByGender] = useState<SaleByGender[]>([]);
   const [filterData, setFilterData] = useState<Store>();
+  const [salesSummary, setSalesSummary] = useState<SalesSummary>({ sum: 0 });
 
   const params = useMemo(() => buildParams(filterData), [filterData]);
 
@@ -32,6 +33,25 @@ function App() {
     };
   }, [params]);
 
+  useEffect(() => {
+    let isApiSubscribed = true;
+
+    requestBackend
+      .get<SalesSummary>('/sales/summary', { params })
+      .then((response) => {
+        if (isApiSubscribed) {
+          setSalesSummary(response.data);
+        }
+      })
+      .catch((error) => {
+        console.log('Erro sales summary', error);
+      });
+
+    return () => {
+      isApiSubscribed = false;
+    };
+  }, [params]);
+
   const handleFilterChange = (store: Store | undefined) => {
     setFilterData(store);
   };
@@ -44,7 +64,7 @@ function App() {
       <main className="App-main-container">
         <Filter className="App-filter-container" onFilterChange={handleFilterChange} />
         <SalesPanel
-          valueSum={746484.0}
+          valueSum={salesSummary.sum}
           labels={salesByGender.map(({ gender }) => {
             return gender;
           })}
