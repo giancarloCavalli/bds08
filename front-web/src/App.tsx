@@ -1,10 +1,12 @@
 import './App.css';
+import { Navbar } from './components/navbar';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header"></header>
-      <h1>Herou Warudo</h1>
+      <header className="App-header">
+        <Navbar />
+      </header>
     </div>
   );
 }

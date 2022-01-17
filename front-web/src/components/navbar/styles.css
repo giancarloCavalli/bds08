@@ -1,0 +1,9 @@
+.navbar-container {
+  padding: 25px 40px;
+  color: var(--primary-color);
+}
+
+a {
+  font-size: 24px;
+  font-weight: 700;
+}
