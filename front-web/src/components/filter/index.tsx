@@ -1,14 +1,24 @@
 import './styles.css';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { requestBackend } from '../../utils/requests';
-import { Store } from '../../types/types';
+import { Gender, Store } from '../../types/types';
 
 type Props = {
   className?: string;
+  onFilterChange: (store: Store | undefined) => void;
 };
 
-export const Filter = ({ className }: Props) => {
+export const Filter = ({ className, onFilterChange }: Props) => {
   const [stores, setStores] = useState<Store[]>([]);
+  const [store, setStore] = useState<string>();
+
+  const onChangeStore = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedStore = event.target.value as string;
+
+    setStore(selectedStore);
+
+    onFilterChange(stores.find((x) => x.name === selectedStore));
+  };
 
   useEffect(() => {
     let isApiSubscribed = true;
@@ -31,8 +41,8 @@ export const Filter = ({ className }: Props) => {
 
   return (
     <div className={`filter-container base-card ${className}`}>
-      <select name="lojas">
-        <option value="">Seleciona uma loja</option>
+      <select name="lojas" value={store} onChange={onChangeStore}>
+        <option value="">Selecione uma loja</option>
         {stores.map((store) => (
           <option key={store.id} value={store.name}>
             {store.name}
