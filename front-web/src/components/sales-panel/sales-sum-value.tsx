@@ -1,3 +1,5 @@
+import { formatPrice } from '../../utils/formatters';
+
 type Props = {
   valueSum: number;
 };
@@ -5,7 +7,7 @@ type Props = {
 export const SalesSumValue = ({ valueSum }: Props) => {
   return (
     <div className="sales-sum-value-container">
-      <h1>{valueSum}</h1>
+      <h1>{formatPrice(valueSum)}</h1>
       <span>Total de vendas</span>
     </div>
   );

@@ -5,6 +5,7 @@ import { Navbar } from './components/navbar';
 import { SalesPanel } from './components/sales-panel';
 import { buildParams } from './helpers';
 import { SaleByGender, SalesSummary, Store } from './types/types';
+import { formatGender } from './utils/formatters';
 import { requestBackend } from './utils/requests';
 
 function App() {
@@ -66,7 +67,7 @@ function App() {
         <SalesPanel
           valueSum={salesSummary.sum}
           labels={salesByGender.map(({ gender }) => {
-            return gender;
+            return formatGender(gender);
           })}
           name="Gêneros"
           series={salesByGender.map(({ sum }) => {
