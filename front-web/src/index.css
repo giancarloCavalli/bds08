@@ -1,3 +1,24 @@
+:root {
+  --primary-color: #334ac3;
+  --grey-125-color: #8d8d8d;
+}
+
+* {
+  box-sizing: border-box;
+}
+
 body {
+  margin: 0;
+  font-family: 'Ubuntu', sans-serif;
+  background-color: #ffffff;
+  color: var(--grey-125-color);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin: 0;
 }
